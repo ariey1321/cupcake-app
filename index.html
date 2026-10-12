@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Cupcakes Gourmet</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fff0f5; margin: 0; padding: 20px; }
+        header { text-align: center; color: #d63384; margin-bottom: 30px; }
+        .vitrine { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 200px; text-align: center; }
+        .card h3 { color: #800040; margin-bottom: 5px; }
+        .card p { color: #555; }
+        .price { font-weight: bold; color: #d63384; font-size: 1.2em; }
+        button { background-color: #d63384; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #b02a6b; }
+        .carrinho { margin-top: 40px; background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🧁 Cupcakes Gourmet da Ariele</h1>
+        <p>Faça o seu pedido online com entrega rápida!</p>
+    </header>
+
+    <div class="vitrine">
+        <div class="card">
+            <h3>Red Velvet</h3>
+            <p>Massa vermelha com cream cheese.</p>
+            <p class="price">R$ 12,50</p>
+            <button onclick="adicionarAoCarrinho('Red Velvet', 12.50)">Adicionar</button>
+        </div>
+        <div class="card">
+            <h3>ChocoNinho</h3>
+            <p>Chocolate com recheio de Ninho.</p>
+            <p class="price">R$ 14,00</p>
+            <button onclick="adicionarAoCarrinho('ChocoNinho', 14.00)">Adicionar</button>
+        </div>
+        <div class="card">
+            <h3>Sensação</h3>
+            <p>Chocolate com pedaços de morango.</p>
+            <p class="price">R$ 11,00</p>
+            <button onclick="adicionarAoCarrinho('Sensação', 11.00)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="carrinho">
+        <h2>Seu Carrinho de Compras</h2>
+        <ul id="itens-carrinho"></ul>
+        <p><strong>Total: R$ <span id="valor-total">0.00</span></strong></p>
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+    </div>
+
+    <script>
+        let total = 0;
+        let itens = [];
+
+        function adicionarAoCarrinho(nome, preco) {
+            itens.push({ nome, preco });
+            total += preco;
+            atualizarTela();
+        }
+
+        function atualizarTela() {
+            const lista = document.getElementById('itens-carrinho');
+            lista.innerHTML = '';
+            itens.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+                lista.appendChild(li);
+            });
+            document.getElementById('valor-total').textContent = total.toFixed(2);
+        }
+
+        function finalizarPedido() {
+            if (itens.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            alert('Pedido realizado com sucesso! Em breve entregaremos seus cupcakes.');
+            itens = [];
+            total = 0;
+            atualizarTela();
+        }
+    </script>
+</body>
+</html>
