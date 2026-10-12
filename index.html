@@ -14,7 +14,9 @@
         .price { font-weight: bold; color: #d63384; font-size: 1.2em; }
         button { background-color: #d63384; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
         button:hover { background-color: #b02a6b; }
-        .carrinho { margin-top: 40px; background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .container-painel { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .bloco { background: white; padding: 20px; border-radius: 10px; width: 350px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .bloco input { width: 100%; padding: 8px; margin: 5px 0 15px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -45,11 +47,27 @@
         </div>
     </div>
 
-    <div class="carrinho">
-        <h2>Seu Carrinho de Compras</h2>
-        <ul id="itens-carrinho"></ul>
-        <p><strong>Total: R$ <span id="valor-total">0.00</span></strong></p>
-        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+    <div class="container-painel">
+        <!-- Dados de Entrega do Cliente -->
+        <div class="bloco">
+            <h2>Dados de Entrega</h2>
+            <label>Nome Completo:</label>
+            <input type="text" id="nomeCliente" placeholder="Ex: Maria Silva">
+            
+            <label>Telefone / WhatsApp:</label>
+            <input type="text" id="telCliente" placeholder="(14) 99999-9999">
+            
+            <label>Endereço de Entrega:</label>
+            <input type="text" id="endCliente" placeholder="Rua, Número, Bairro">
+        </div>
+
+        <!-- Carrinho de Compras -->
+        <div class="bloco">
+            <h2>Seu Carrinho</h2>
+            <ul id="itens-carrinho"></ul>
+            <p><strong>Total: R$ <span id="valor-total">0.00</span></strong></p>
+            <button onclick="finalizarPedido()" style="width: 100%;">Finalizar Pedido Online</button>
+        </div>
     </div>
 
     <script>
@@ -74,14 +92,27 @@
         }
 
         function finalizarPedido() {
+            const nome = document.getElementById('nomeCliente').value;
+            const endereco = document.getElementById('endCliente').value;
+
             if (itens.length === 0) {
-                alert('Seu carrinho está vazio!');
+                alert('Seu carrinho está vazio! Adicione pelo menos um cupcake.');
                 return;
             }
-            alert('Pedido realizado com sucesso! Em breve entregaremos seus cupcakes.');
+            if (!nome || !endereco) {
+                alert('Por favor, preencha o seu Nome e o Endereço de entrega!');
+                return;
+            }
+
+            alert(`Obrigado pelo pedido, ${nome}!\n\nSeus cupcakes serão entregues em:\n${endereco}\n\nPedido realizado com sucesso!`);
+            
+            // Limpa tudo após o pedido
             itens = [];
             total = 0;
             atualizarTela();
+            document.getElementById('nomeCliente').value = '';
+            document.getElementById('telCliente').value = '';
+            document.getElementById('endCliente').value = '';
         }
     </script>
 </body>
