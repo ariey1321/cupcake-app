@@ -16,7 +16,7 @@
         button:hover { background-color: #b02a6b; }
         .container-painel { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
         .bloco { background: white; padding: 20px; border-radius: 10px; width: 350px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .bloco input { width: 100%; padding: 8px; margin: 5px 0 15px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .bloco input, .bloco select { width: 100%; padding: 8px; margin: 5px 0 15px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="container-painel">
-        <!-- Dados de Entrega do Cliente -->
+        <!-- Dados de Entrega e Pagamento -->
         <div class="bloco">
             <h2>Dados de Entrega</h2>
             <label>Nome Completo:</label>
@@ -59,6 +59,13 @@
             
             <label>Endereço de Entrega:</label>
             <input type="text" id="endCliente" placeholder="Rua, Número, Bairro">
+
+            <label>Forma de Pagamento:</label>
+            <select id="formaPagamento">
+                <option value="Cartão na Entrega (Maquininha)">Cartão na Entrega (Levar Maquininha)</option>
+                <option value="PIX">PIX (Chave enviada no WhatsApp)</option>
+                <option value="Dinheiro">Dinheiro (Avisar sobre troco)</option>
+            </select>
         </div>
 
         <!-- Carrinho de Compras -->
@@ -94,6 +101,7 @@
         function finalizarPedido() {
             const nome = document.getElementById('nomeCliente').value;
             const endereco = document.getElementById('endCliente').value;
+            const pagamento = document.getElementById('formaPagamento').value;
 
             if (itens.length === 0) {
                 alert('Seu carrinho está vazio! Adicione pelo menos um cupcake.');
@@ -104,7 +112,7 @@
                 return;
             }
 
-            alert(`Obrigado pelo pedido, ${nome}!\n\nSeus cupcakes serão entregues em:\n${endereco}\n\nPedido realizado com sucesso!`);
+            alert(`Pedido realizado com sucesso!\n\nCliente: ${nome}\nEndereço: ${endereco}\nPagamento: ${pagamento}\n\nObrigado pela preferência! Seus cupcakes já vão ser preparados.`);
             
             // Limpa tudo após o pedido
             itens = [];
